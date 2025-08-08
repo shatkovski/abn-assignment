@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TVShow } from '@/types/store'
-import ShowCard from './ShowCard.vue'
+import ShowCard from '@/components/ShowCard.vue'
 
 defineProps<{
   shows: TVShow[]
@@ -10,7 +10,7 @@ defineProps<{
 
 <template>
   <div class="horizontal-scroller">
-    <div class="scroller-header">
+    <div class="scroller-header container">
       <h2 class="scroller-title">{{ title }}</h2>
       <span class="show-count">{{ shows.length }} shows</span>
     </div>
@@ -24,6 +24,15 @@ defineProps<{
 </template>
 
 <style scoped>
+.horizontal-scroller {
+  padding: 12px 0;
+}
+
+.scroller-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
 .shows-list {
   display: flex;
   gap: 16px;
