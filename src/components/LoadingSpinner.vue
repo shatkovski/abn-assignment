@@ -1,0 +1,62 @@
+<script setup lang="ts">
+defineOptions({
+  name: 'LoadingSpinner',
+})
+</script>
+
+<template>
+  <div class="loading-spinner">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading...</p>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 16px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #f0f0f0;
+  border-top: 4px solid #007bff;
+  border-right: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 0.8s ease-in-out infinite;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+.loading-text {
+  margin: 0;
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

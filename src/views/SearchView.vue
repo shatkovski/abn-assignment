@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { searchShows } from '@/services/tvMazeApi'
 import type { TVMazeShow } from '@/types/api'
 import ShowCard from '@/components/ShowCard.vue'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const props = defineProps<{
   searchQuery: string
@@ -12,7 +13,7 @@ const searchResults = ref<TVMazeShow[]>([])
 const loading = ref(false)
 const error = ref<string | null>(null)
 
-let debounceTimer: number | null = null
+let debounceTimer: ReturnType<typeof setTimeout> | null = null
 
 watch(
   () => props.searchQuery,
@@ -46,8 +47,7 @@ watch(
   <div class="search-view">
     <div class="container">
       <h1>Search Results for "{{ searchQuery }}"</h1>
-
-      <div v-if="loading" class="loading">Searching...</div>
+      <LoadingSpinner v-if="loading" />
       <div v-else-if="error" class="error">{{ error }}</div>
       <div v-else-if="searchResults.length > 0" class="results">
         <div class="shows-grid">
@@ -74,12 +74,6 @@ watch(
     color: #666;
     margin-bottom: 24px;
   }
-}
-
-.loading {
-  text-align: center;
-  padding: 24px;
-  color: #666;
 }
 
 .error {

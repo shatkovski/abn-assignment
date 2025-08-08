@@ -1,12 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import SearchView from '@/views/SearchView.vue'
 
+const route = useRoute()
 const searchQuery = ref('')
 
 const resetSearch = () => {
   searchQuery.value = ''
 }
+
+// Scroll to top on route change
+watch(
+  () => route.path,
+  () => {
+    window.scrollTo({ top: 0 })
+  },
+)
 </script>
 
 <template>

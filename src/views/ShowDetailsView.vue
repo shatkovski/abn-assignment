@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { useShowsStore } from '@/stores/shows'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { getShowById, getShowEpisodes } from '@/services/tvMazeApi'
 import type { TVMazeEpisode, TVMazeShow } from '@/types/api'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 defineOptions({
   name: 'ShowDetailsView',
@@ -13,25 +14,26 @@ const route = useRoute()
 const showsStore = useShowsStore()
 
 const showId = computed(() => Number(route.params.id))
-const show = ref<TVMazeShow | null>(null)
+const show = ref<TVMazeShow | undefined>(showsStore.shows.find((s) => s.id === showId.value))
 const episodes = ref<TVMazeEpisode[]>([])
 const loading = ref(false)
 
-onMounted(async () => {
-  loading.value = true
+watchEffect(async () => {
+  if (!showId.value) return
   try {
-    // Check if show already exists in store
-    const storeShow = showsStore.shows.find((s) => s.id === showId.value)
-    if (storeShow) {
-      show.value = storeShow
+    loading.value = true
+    if (show.value) {
+      // Show exists in store, only fetch episodes
+      episodes.value = await getShowEpisodes(showId.value)
     } else {
-      // Show not in store, fetch from API
-      const showDetails = await getShowById(showId.value)
+      // Fetch both show details and episodes concurrently
+      const [showDetails, episodesData] = await Promise.all([
+        getShowById(showId.value),
+        getShowEpisodes(showId.value),
+      ])
       show.value = showDetails
+      episodes.value = episodesData
     }
-
-    // Always fetch episodes
-    episodes.value = await getShowEpisodes(showId.value)
   } catch (error) {
     console.error('Failed to fetch show data:', error)
   } finally {
@@ -151,13 +153,13 @@ onMounted(async () => {
           </div>
         </div>
 
-        <div class="episodes-section">
+        <div v-if="episodes.length > 0" class="episodes-section">
           <h2>
             {{ episodes[episodes.length - 1].season }} Season{{
               episodes[episodes.length - 1].season > 1 ? 's' : ''
             }}; {{ episodes.length }} Episode{{ episodes.length > 1 ? 's' : '' }}
           </h2>
-          <div v-if="loading" class="loading">Loading episodes...</div>
+          <LoadingSpinner v-if="loading" />
           <div v-else-if="episodes.length > 0" class="episodes-list">
             <div
               v-for="episode in episodes.slice(-10).reverse()"
@@ -174,7 +176,7 @@ onMounted(async () => {
           <div v-else class="no-episodes">No episodes available</div>
         </div>
       </div>
-      <div v-else>Loading...</div>
+      <LoadingSpinner v-else />
     </div>
   </div>
 </template>
@@ -323,12 +325,6 @@ onMounted(async () => {
     color: #666;
     font-size: 14px;
   }
-}
-
-.loading {
-  text-align: center;
-  padding: 24px;
-  color: #666;
 }
 
 .no-episodes {

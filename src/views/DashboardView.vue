@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useShowsStore } from '@/stores/shows'
-import { onMounted } from 'vue'
 import HorizontalScroller from '@/components/HorizontalScroller.vue'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 // Component name for linting
 defineOptions({
@@ -9,10 +9,9 @@ defineOptions({
 })
 
 const showsStore = useShowsStore()
-
-onMounted(() => {
+if (!showsStore.shows.length) {
   showsStore.fetchAllShows()
-})
+}
 </script>
 
 <template>
@@ -20,7 +19,7 @@ onMounted(() => {
     <!-- Main Content -->
     <main class="dashboard-content">
       <!-- Loading State -->
-      <div v-if="showsStore.loading">Loading...</div>
+      <LoadingSpinner v-if="showsStore.loading" />
 
       <!-- Error State -->
       <div v-else-if="showsStore.error" class="error-container">
