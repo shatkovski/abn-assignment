@@ -11,7 +11,7 @@ defineOptions({
 </script>
 
 <template>
-  <div class="show-card">
+  <RouterLink :to="`/show/${show.id}`" class="show-card">
     <div class="show-image">
       <img
         v-if="show.image"
@@ -43,13 +43,19 @@ defineOptions({
         {{ new Date(show.premiered).getFullYear() }}
       </div>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <style scoped>
 .show-card {
   width: 200px;
   flex-shrink: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.show-title {
+  font-weight: 600;
 }
 
 .show-image {

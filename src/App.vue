@@ -7,7 +7,7 @@ const searchQuery = ref('')
 <template>
   <header class="header">
     <div class="header-content container">
-      <h1 class="title">TV Shows</h1>
+      <RouterLink to="/" class="title">TV Shows</RouterLink>
       <input
         v-model="searchQuery"
         type="text"
@@ -49,6 +49,8 @@ const searchQuery = ref('')
   font-size: 28px;
   font-weight: bold;
   white-space: nowrap;
+  text-decoration: none;
+  color: inherit;
 }
 
 .search-input {
