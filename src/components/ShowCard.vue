@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TVMazeShow } from '@/types/api'
+import { ShowStatus } from '@/types/api'
 
 defineProps<{
   show: TVMazeShow
@@ -8,22 +9,25 @@ defineProps<{
 defineOptions({
   name: 'ShowCard',
 })
+
+const getStatusClass = (status: ShowStatus): string => {
+  switch (status) {
+    case ShowStatus.ENDED:
+      return 'ended'
+    case ShowStatus.RUNNING:
+      return 'running'
+    case ShowStatus.TO_BE_DETERMINED:
+      return 'to-be-determined'
+    default:
+      return 'unknown'
+  }
+}
 </script>
 
 <template>
   <RouterLink :to="`/show/${show.id}`" class="show-card">
     <div class="show-image">
-      <img
-        v-if="show.image"
-        :src="show.image.medium"
-        :alt="show.name"
-        @error="
-          (event) => {
-            const target = event.target as HTMLImageElement
-            target.style.display = 'none'
-          }
-        "
-      />
+      <img v-if="show.image" :src="show.image.medium" :alt="show.name" loading="lazy" />
     </div>
 
     <div class="show-content">
@@ -34,7 +38,7 @@ defineOptions({
           <span class="rating-value">{{ show.rating.average.toFixed(1) }}</span>
           <span class="rating-stars">★</span>
         </div>
-        <div class="status" :class="show.status.toLowerCase()">
+        <div class="status" :class="getStatusClass(show.status)">
           {{ show.status }}
         </div>
       </div>
@@ -118,8 +122,13 @@ defineOptions({
     color: white;
   }
 
-  &.in-development {
+  &.to-be-determined {
     background: #f39c12;
+    color: white;
+  }
+
+  &.unknown {
+    background: #95a5a6;
     color: white;
   }
 }

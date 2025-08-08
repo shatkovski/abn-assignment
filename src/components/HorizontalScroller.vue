@@ -53,7 +53,7 @@ defineProps<{
 .shows-list {
   display: flex;
   gap: 16px;
-  padding: 16px 0;
+  padding: 16px calc(50% - 700px);
   overflow-x: auto;
 }
 

@@ -1,3 +1,9 @@
+export enum ShowStatus {
+  ENDED = 'Ended',
+  RUNNING = 'Running',
+  TO_BE_DETERMINED = 'To Be Determined',
+}
+
 export interface TVMazeShow {
   id: number
   url: string
@@ -5,7 +11,7 @@ export interface TVMazeShow {
   type: string
   language: string
   genres: string[]
-  status: string
+  status: ShowStatus
   runtime: number
   averageRuntime: number
   premiered: string
