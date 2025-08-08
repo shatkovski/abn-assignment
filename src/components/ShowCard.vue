@@ -6,10 +6,6 @@ defineProps<{
   show: TVMazeShow
 }>()
 
-defineOptions({
-  name: 'ShowCard',
-})
-
 const getStatusClass = (status: ShowStatus): string => {
   switch (status) {
     case ShowStatus.ENDED:

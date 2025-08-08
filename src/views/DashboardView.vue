@@ -3,11 +3,6 @@ import { useShowsStore } from '@/stores/shows'
 import HorizontalScroller from '@/components/HorizontalScroller.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
-// Component name for linting
-defineOptions({
-  name: 'DashboardView',
-})
-
 const showsStore = useShowsStore()
 if (!showsStore.shows.length) {
   showsStore.fetchAllShows()

@@ -6,10 +6,6 @@ import { getShowById, getShowEpisodes } from '@/services/tvMazeApi'
 import type { TVMazeEpisode, TVMazeShow } from '@/types/api'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
-defineOptions({
-  name: 'ShowDetailsView',
-})
-
 const route = useRoute()
 const showsStore = useShowsStore()
 
@@ -17,6 +13,18 @@ const showId = computed(() => Number(route.params.id))
 const show = ref<TVMazeShow | undefined>(showsStore.shows.find((s) => s.id === showId.value))
 const episodes = ref<TVMazeEpisode[]>([])
 const loading = ref(false)
+
+// Display medium image if it's cached, otherwise display original image
+const showMediumImage = ref(false)
+if (show.value?.image) {
+  const { image } = show.value
+  const cachedEntries = performance.getEntriesByType('resource')
+  const isOriginalCached = cachedEntries.some((entry) => entry.name === image.original)
+  const isMediumCached = cachedEntries.some((entry) => entry.name === image.medium)
+  if (!isOriginalCached && isMediumCached) {
+    showMediumImage.value = true
+  }
+}
 
 watchEffect(async () => {
   if (!showId.value) return
@@ -47,7 +55,13 @@ watchEffect(async () => {
     <div class="container">
       <div v-if="show" class="show-content">
         <div class="show-info">
-          <img v-if="show.image" :src="show.image.original" :alt="show.name" />
+          <img
+            v-if="show.image"
+            :src="showMediumImage ? show.image.medium : show.image.original"
+            :alt="show.name"
+            @load="showMediumImage = false"
+            class="show-image"
+          />
           <div class="details">
             <h1 class="show-title">{{ show.name }}</h1>
             <div class="basic-info">
@@ -198,7 +212,7 @@ watchEffect(async () => {
   margin-top: 24px;
 
   img {
-    width: 300px;
+    width: 400px;
   }
 
   a {
