@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { TVShow } from '@/types/store'
+import type { TVMazeShow } from '@/types/api'
 
 defineProps<{
-  show: TVShow
+  show: TVMazeShow
 }>()
 
 defineOptions({
@@ -15,7 +15,7 @@ defineOptions({
     <div class="show-image">
       <img
         v-if="show.image"
-        :src="show.image"
+        :src="show.image.medium"
         :alt="show.name"
         @error="
           (event) => {
@@ -30,8 +30,8 @@ defineOptions({
       <h3 class="show-title">{{ show.name }}</h3>
 
       <div class="show-meta">
-        <div class="rating" v-if="show.rating">
-          <span class="rating-value">{{ show.rating.toFixed(1) }}</span>
+        <div class="rating" v-if="show.rating?.average">
+          <span class="rating-value">{{ show.rating.average.toFixed(1) }}</span>
           <span class="rating-stars">★</span>
         </div>
         <div class="status" :class="show.status.toLowerCase()">
@@ -46,7 +46,7 @@ defineOptions({
   </RouterLink>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .show-card {
   width: 200px;
   flex-shrink: 0;
@@ -62,22 +62,65 @@ defineOptions({
   width: 100%;
   height: 280px;
   overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
-.show-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.show-content {
+  padding: 12px;
 }
 
-.show-genres {
+.show-meta {
   display: flex;
-  gap: 4px;
-  margin-bottom: 8px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
 }
 
-.genre-tag {
-  font-size: 0.7rem;
+.show-year {
   color: #666;
+  font-size: 14px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rating-value {
+  font-weight: 600;
+  color: #f39c12;
+}
+
+.rating-stars {
+  color: #f39c12;
+}
+
+.status {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+
+  &.ended {
+    background: #e74c3c;
+    color: white;
+  }
+
+  &.running {
+    background: #27ae60;
+    color: white;
+  }
+
+  &.in-development {
+    background: #f39c12;
+    color: white;
+  }
 }
 </style>

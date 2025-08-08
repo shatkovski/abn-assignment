@@ -1,16 +1,28 @@
-import type { TVMazeShow } from '@/types/api'
+import type { TVMazeShow, TVMazeEpisode } from '@/types/api'
 
 const BASE_URL = 'https://api.tvmaze.com'
 
-export async function getAllShows(): Promise<TVMazeShow[]> {
+async function fetchFromAPI<T>(endpoint: string, errorMessage: string): Promise<T> {
   try {
-    const response = await fetch(`${BASE_URL}/shows`)
+    const response = await fetch(`${BASE_URL}${endpoint}`)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
     return response.json()
   } catch (error) {
-    console.error('Error fetching shows:', error)
+    console.error(errorMessage, error)
     throw error
   }
+}
+
+export async function getAllShows(): Promise<TVMazeShow[]> {
+  return fetchFromAPI<TVMazeShow[]>('/shows', 'Error fetching shows')
+}
+
+export async function getShowById(id: number): Promise<TVMazeShow> {
+  return fetchFromAPI<TVMazeShow>(`/shows/${id}`, 'Error fetching show details')
+}
+
+export async function getShowEpisodes(id: number): Promise<TVMazeEpisode[]> {
+  return fetchFromAPI<TVMazeEpisode[]>(`/shows/${id}/episodes`, 'Error fetching show episodes')
 }

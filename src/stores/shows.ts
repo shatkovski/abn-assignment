@@ -2,23 +2,11 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { getAllShows } from '@/services/tvMazeApi'
 import type { TVMazeShow } from '@/types/api'
-import type { TVShow } from '@/types/store'
 
 export const useShowsStore = defineStore('shows', () => {
-  const shows = ref<TVShow[]>([])
+  const shows = ref<TVMazeShow[]>([])
   const loading = ref(false)
   const error = ref<string | null>(null)
-
-  // Transform TVMaze API data to simplified store format
-  const transformShow = (tvShow: TVMazeShow): TVShow => ({
-    id: tvShow.id,
-    name: tvShow.name,
-    genres: tvShow.genres,
-    rating: tvShow.rating?.average || null,
-    image: tvShow.image?.medium || null,
-    status: tvShow.status,
-    premiered: tvShow.premiered,
-  })
 
   // Get all unique genres from shows
   const allGenres = computed(() => {
@@ -31,13 +19,11 @@ export const useShowsStore = defineStore('shows', () => {
 
   // Group shows by genre and sort by rating
   const showsByGenre = computed(() => {
-    const grouped: Record<string, TVShow[]> = {}
+    const grouped: Record<string, TVMazeShow[]> = {}
     allGenres.value.forEach((genre) => {
       grouped[genre] = shows.value
         .filter((show) => show.genres.includes(genre))
-        .sort((a, b) => {
-          return (b.rating || 0) - (a.rating || 0)
-        })
+        .sort((a, b) => (b.rating?.average || 0) - (a.rating?.average || 0))
     })
     return grouped
   })
@@ -47,7 +33,7 @@ export const useShowsStore = defineStore('shows', () => {
     error.value = null
     try {
       const tvShows = await getAllShows()
-      shows.value = tvShows.map(transformShow)
+      shows.value = tvShows
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Failed to fetch shows'
     } finally {

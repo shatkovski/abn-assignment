@@ -22,7 +22,7 @@ const searchQuery = ref('')
   <RouterView />
 </template>
 
-<style>
+<style lang="scss">
 .header {
   position: sticky;
   top: 0;
@@ -32,16 +32,16 @@ const searchQuery = ref('')
   border-bottom: 1px solid #eee;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .title {
@@ -60,10 +60,10 @@ const searchQuery = ref('')
   border-radius: 8px;
   font-size: 16px;
   outline: none;
-}
 
-.search-input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  &:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
 }
 </style>

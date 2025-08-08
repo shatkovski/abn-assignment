@@ -1,17 +1,8 @@
-// Simplified show type for store - only essential data
-export interface TVShow {
-  id: number
-  name: string
-  genres: string[]
-  rating: number | null
-  image: string | null
-  status: string
-  premiered: string
-}
+import type { TVMazeShow } from './api'
 
 // Store state types
 export interface ShowsState {
-  shows: TVShow[]
+  shows: TVMazeShow[]
   loading: boolean
   error: string | null
 }
@@ -19,7 +10,7 @@ export interface ShowsState {
 // Store computed types
 export interface ShowsComputed {
   allGenres: string[]
-  showsByGenre: Record<string, TVShow[]>
+  showsByGenre: Record<string, TVMazeShow[]>
 }
 
 // Store actions types
