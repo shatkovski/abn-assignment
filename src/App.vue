@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import SearchView from '@/views/SearchView.vue'
 
 const searchQuery = ref('')
+
+const resetSearch = () => {
+  searchQuery.value = ''
+}
 </script>
 
 <template>
   <header class="header">
     <div class="header-content container">
-      <RouterLink to="/" class="title">TV Shows</RouterLink>
+      <RouterLink to="/" class="title" @click="resetSearch">TV Shows</RouterLink>
       <input
-        v-model="searchQuery"
+        v-model.trim="searchQuery"
         type="text"
         id="search"
         name="search"
@@ -19,7 +24,8 @@ const searchQuery = ref('')
     </div>
   </header>
 
-  <RouterView />
+  <SearchView v-if="searchQuery" :search-query="searchQuery" />
+  <RouterView v-else />
 </template>
 
 <style lang="scss">

@@ -26,3 +26,11 @@ export async function getShowById(id: number): Promise<TVMazeShow> {
 export async function getShowEpisodes(id: number): Promise<TVMazeEpisode[]> {
   return fetchFromAPI<TVMazeEpisode[]>(`/shows/${id}/episodes`, 'Error fetching show episodes')
 }
+
+export async function searchShows(query: string): Promise<TVMazeShow[]> {
+  const results = await fetchFromAPI<{ show: TVMazeShow }[]>(
+    `/search/shows?q=${encodeURIComponent(query)}`,
+    'Error searching shows',
+  )
+  return results.map((result) => result.show)
+}
