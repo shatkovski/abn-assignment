@@ -100,4 +100,53 @@ defineProps<{
 .rating-stars {
   color: var(--color-rating);
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .show-card {
+    width: 160px;
+  }
+
+  .show-image {
+    height: 220px;
+  }
+
+  .show-title {
+    font-size: 14px;
+  }
+
+  .show-year {
+    font-size: 12px;
+  }
+
+  .show-rating {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .show-card {
+    width: 140px;
+  }
+
+  .show-image {
+    height: 180px;
+  }
+
+  .show-title {
+    font-size: 13px;
+  }
+
+  .show-year {
+    font-size: 11px;
+  }
+
+  .show-rating {
+    padding: 3px 6px;
+    font-size: 11px;
+    bottom: 8px;
+    right: 8px;
+  }
+}
 </style>

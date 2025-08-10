@@ -100,4 +100,47 @@ defineProps<{
 .shows-list::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .horizontal-scroller {
+    padding: 24px 0 0;
+  }
+
+  .scroller-header {
+    margin-bottom: 12px;
+  }
+
+  .scroller-title {
+    font-size: 20px;
+  }
+
+  .show-count {
+    font-size: 12px;
+  }
+
+  .shows-list {
+    gap: 12px;
+    padding: 12px max(calc(50% - 350px), 12px) 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .horizontal-scroller {
+    padding: 20px 0 0;
+  }
+
+  .scroller-title {
+    font-size: 18px;
+  }
+
+  .show-count {
+    font-size: 11px;
+  }
+
+  .shows-list {
+    gap: 10px;
+    padding: 10px max(calc(50% - 280px), 10px) 16px;
+  }
+}
 </style>

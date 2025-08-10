@@ -94,4 +94,47 @@ if (!showsStore.shows.length) {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
   }
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .error-container {
+    padding: 40px 16px;
+    max-width: 400px;
+  }
+
+  .error-title {
+    font-size: 24px;
+  }
+
+  .error-message {
+    font-size: 15px;
+    margin: 0 0 24px 0;
+  }
+
+  .retry-button {
+    padding: 10px 20px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .error-container {
+    padding: 32px 12px;
+    max-width: 320px;
+  }
+
+  .error-title {
+    font-size: 20px;
+  }
+
+  .error-message {
+    font-size: 14px;
+    margin: 0 0 20px 0;
+  }
+
+  .retry-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
 </style>

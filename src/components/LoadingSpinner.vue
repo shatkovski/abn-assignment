@@ -55,4 +55,39 @@
     transform: rotate(360deg);
   }
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .loading-spinner {
+    padding: 32px 16px;
+    gap: 12px;
+  }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+  }
+
+  .loading-text {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-spinner {
+    padding: 24px 12px;
+    gap: 10px;
+  }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border-width: 3px;
+  }
+
+  .loading-text {
+    font-size: 14px;
+  }
+}
 </style>

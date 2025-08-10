@@ -97,4 +97,44 @@ const resetSearch = () => {
     font-weight: 500;
   }
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    padding: 12px 0;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .title {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .search-container {
+    justify-content: center;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 300px;
+    font-size: 18px;
+    padding: 8px 18px 8px 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .search-input {
+    font-size: 16px;
+    padding: 6px 18px 6px 32px;
+  }
+}
 </style>
