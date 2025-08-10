@@ -7,11 +7,12 @@ import AppHeader from '@/components/AppHeader.vue'
 const route = useRoute()
 const searchQuery = ref('')
 
-// Scroll to top on route change
+// Scroll to top and clear search on route change
 watch(
   () => route.path,
   () => {
     window.scrollTo({ top: 0 })
+    searchQuery.value = ''
   },
 )
 </script>

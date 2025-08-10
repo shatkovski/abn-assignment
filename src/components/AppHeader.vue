@@ -93,7 +93,7 @@ const resetSearch = () => {
   color: var(--color-text-primary);
 
   &::placeholder {
-    color: var(--color-text-secondary);
+    color: var(--color-text-muted);
     font-weight: 500;
   }
 }
