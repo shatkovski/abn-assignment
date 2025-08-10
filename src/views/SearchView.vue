@@ -71,7 +71,7 @@ watch(
 
   p {
     font-size: 18px;
-    color: #666;
+    color: var(--color-text-secondary);
     margin-bottom: 24px;
   }
 }
@@ -79,8 +79,8 @@ watch(
 .error {
   text-align: center;
   padding: 24px;
-  color: #e74c3c;
-  background: #fdf2f2;
+  color: var(--color-error);
+  background: var(--color-error-bg);
   border-radius: 8px;
   margin: 16px 0;
 }
@@ -99,7 +99,7 @@ watch(
 .no-results {
   text-align: center;
   padding: 24px;
-  color: #666;
+  color: var(--color-text-secondary);
   font-style: italic;
 }
 </style>

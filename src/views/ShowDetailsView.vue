@@ -216,7 +216,7 @@ watchEffect(async () => {
   }
 
   a {
-    color: #3498db;
+    color: var(--color-text-accent);
     text-decoration: none;
     font-weight: 500;
   }
@@ -249,7 +249,7 @@ watchEffect(async () => {
 .official-site {
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-border-light);
 
   h3 {
     margin: 0 0 12px 0;
@@ -269,12 +269,11 @@ watchEffect(async () => {
 .dvd-info {
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-border-light);
 
   h3 {
     margin: 0 0 12px 0;
     font-size: 18px;
-    color: #2c3e50;
   }
 }
 
@@ -284,7 +283,7 @@ watchEffect(async () => {
   }
 
   a {
-    color: #3498db;
+    color: var(--color-text-accent);
     text-decoration: none;
     font-weight: 500;
 
@@ -318,13 +317,13 @@ watchEffect(async () => {
   display: flex;
   gap: 16px;
   padding: 12px;
-  border: 1px solid #eee;
+  border: 1px solid var(--color-border-light);
   border-radius: 8px;
 }
 
 .episode-number {
   font-weight: bold;
-  color: #666;
+  color: var(--color-text-secondary);
   min-width: 60px;
 }
 
@@ -336,7 +335,7 @@ watchEffect(async () => {
 
   p {
     margin: 0;
-    color: #666;
+    color: var(--color-text-secondary);
     font-size: 14px;
   }
 }
@@ -344,7 +343,7 @@ watchEffect(async () => {
 .no-episodes {
   text-align: center;
   padding: 24px;
-  color: #666;
+  color: var(--color-text-secondary);
   font-style: italic;
 }
 </style>

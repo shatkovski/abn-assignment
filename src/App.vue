@@ -2,13 +2,10 @@
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import SearchView from '@/views/SearchView.vue'
+import AppHeader from '@/components/AppHeader.vue'
 
 const route = useRoute()
 const searchQuery = ref('')
-
-const resetSearch = () => {
-  searchQuery.value = ''
-}
 
 // Scroll to top on route change
 watch(
@@ -20,66 +17,23 @@ watch(
 </script>
 
 <template>
-  <header class="header">
-    <div class="header-content container">
-      <RouterLink to="/" class="title" @click="resetSearch">TV Shows</RouterLink>
-      <input
-        v-model.trim="searchQuery"
-        type="text"
-        id="search"
-        name="search"
-        placeholder="Search shows..."
-        class="search-input"
-      />
-    </div>
-  </header>
+  <div class="app">
+    <AppHeader v-model="searchQuery" />
 
-  <SearchView v-if="searchQuery" :search-query="searchQuery" />
-  <RouterView v-else />
+    <SearchView v-if="searchQuery" :search-query="searchQuery" />
+    <RouterView v-else />
+  </div>
 </template>
 
 <style lang="scss">
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: white;
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.app {
+  font-family: sans-serif;
+  color: var(--color-text-primary);
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
-}
-
-.title {
-  margin: 0;
-  font-size: 28px;
-  font-weight: bold;
-  white-space: nowrap;
-  text-decoration: none;
-  color: inherit;
-}
-
-.search-input {
-  width: 300px;
-  padding: 10px 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  outline: none;
-
-  &:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-  }
+  padding: 0 16px;
 }
 </style>

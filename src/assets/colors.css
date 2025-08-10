@@ -1,0 +1,22 @@
+/* Design System Color Variables */
+:root {
+  /* Text Colors */
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+  --color-text-accent: #3b82f6;
+
+  /* Background Colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-bg-muted: #f1f1f1;
+
+  /* Border Colors */
+  --color-border-light: #e5e7eb;
+  --color-border-medium: #d1d5db;
+
+  /* Interactive Colors */
+  --color-rating: #fbbf24;
+  --color-error: #dc2626;
+  --color-error-bg: #fef2f2;
+}

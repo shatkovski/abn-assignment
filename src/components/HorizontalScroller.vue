@@ -15,7 +15,7 @@ defineProps<{
       <span class="show-count">{{ shows.length }} shows</span>
     </div>
 
-    <div class="scroller-container">
+    <div class="horizontal-scroller-container">
       <div class="shows-list">
         <ShowCard v-for="show in shows" :key="show.id" :show="show" />
       </div>
@@ -25,7 +25,7 @@ defineProps<{
 
 <style lang="scss" scoped>
 .horizontal-scroller {
-  padding: 12px 0;
+  padding: 32px 0 0;
 }
 
 .horizontal-scroller-header {
@@ -36,7 +36,33 @@ defineProps<{
 }
 
 .horizontal-scroller-container {
-  overflow-x: auto;
+  position: relative;
+}
+
+/* Left fade shadow */
+.horizontal-scroller-container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.4), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Right fade shadow */
+.horizontal-scroller-container::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.4), transparent);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .scroller-title {
@@ -46,15 +72,15 @@ defineProps<{
 }
 
 .show-count {
-  color: #666;
+  color: var(--color-text-secondary);
   font-size: 14px;
 }
 
 .shows-list {
   display: flex;
   gap: 16px;
-  padding: 16px calc(50% - 700px);
-  overflow-x: auto;
+  padding: 16px max(calc(50% - 700px), 16px) 24px;
+  overflow-x: scroll;
 }
 
 .shows-list::-webkit-scrollbar {
@@ -62,7 +88,7 @@ defineProps<{
 }
 
 .shows-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--color-bg-muted);
   border-radius: 4px;
 }
 

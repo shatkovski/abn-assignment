@@ -1,43 +1,24 @@
 <script setup lang="ts">
 import type { TVMazeShow } from '@/types/api'
-import { ShowStatus } from '@/types/api'
 
 defineProps<{
   show: TVMazeShow
 }>()
-
-const getStatusClass = (status: ShowStatus): string => {
-  switch (status) {
-    case ShowStatus.ENDED:
-      return 'ended'
-    case ShowStatus.RUNNING:
-      return 'running'
-    case ShowStatus.TO_BE_DETERMINED:
-      return 'to-be-determined'
-    default:
-      return 'unknown'
-  }
-}
 </script>
 
 <template>
   <RouterLink :to="`/show/${show.id}`" class="show-card">
     <div class="show-image">
       <img v-if="show.image" :src="show.image.medium" :alt="show.name" loading="lazy" />
+
+      <div v-if="show.rating?.average" class="show-rating">
+        <span class="rating-value">{{ show.rating.average.toFixed(1) }}</span>
+        <span class="rating-stars">★</span>
+      </div>
     </div>
 
     <div class="show-content">
       <h3 class="show-title">{{ show.name }}</h3>
-
-      <div class="show-meta">
-        <div class="rating" v-if="show.rating?.average">
-          <span class="rating-value">{{ show.rating.average.toFixed(1) }}</span>
-          <span class="rating-stars">★</span>
-        </div>
-        <div class="status" :class="getStatusClass(show.status)">
-          {{ show.status }}
-        </div>
-      </div>
 
       <div class="show-year" v-if="show.premiered">
         {{ new Date(show.premiered).getFullYear() }}
@@ -52,6 +33,17 @@ const getStatusClass = (status: ShowStatus): string => {
   flex-shrink: 0;
   text-decoration: none;
   color: inherit;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+
+    .show-image {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+  }
 }
 
 .show-title {
@@ -61,7 +53,11 @@ const getStatusClass = (status: ShowStatus): string => {
 .show-image {
   width: 100%;
   height: 280px;
+  border-radius: 16px;
   overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.2s ease;
 
   img {
     width: 100%;
@@ -71,61 +67,37 @@ const getStatusClass = (status: ShowStatus): string => {
 }
 
 .show-content {
-  padding: 12px;
-}
-
-.show-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 8px 0;
+  padding-top: 12px;
 }
 
 .show-year {
-  color: #666;
+  color: var(--color-text-secondary);
   font-size: 14px;
+  margin-top: 4px;
 }
 
-.rating {
+.show-rating {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 12px;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .rating-value {
-  font-weight: 600;
-  color: #f39c12;
+  color: var(--color-rating);
 }
 
 .rating-stars {
-  color: #f39c12;
-}
-
-.status {
-  font-size: 12px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  font-weight: 500;
-
-  &.ended {
-    background: #e74c3c;
-    color: white;
-  }
-
-  &.running {
-    background: #27ae60;
-    color: white;
-  }
-
-  &.to-be-determined {
-    background: #f39c12;
-    color: white;
-  }
-
-  &.unknown {
-    background: #95a5a6;
-    color: white;
-  }
+  color: var(--color-rating);
 }
 </style>
